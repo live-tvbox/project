@@ -53,45 +53,39 @@ body {
 .accordion-content { transition: max-height 0.3s ease-out; }
 #mobileSearchContainer { transition: all 0.3s ease-in-out; }
 
-/* --- 4. GENERIC SLIDER SYSTEM (Cross-Browser) --- */
+/* --- 4. GENERIC SLIDER SYSTEM (For all sliders) --- */
+/* --- SLIDER FIX --- */
 #productSlider, #relatedSlider, #feedbackSlider, #brandSlider {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* Safari/iOS Momentum Scroll */
+    display: flex !important;
+    overflow-x: auto !important; /* মোবাইলে স্ক্রল সচল রাখবে */
     scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-    touch-action: pan-y; /* Prevent vertical jitter on mobile */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* আইফোনে মোমেন্টাম স্ক্রল */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    touch-action: auto !important; /* ব্রাউজারকে সোয়াইপ করতে বাধা দেবে না */
 }
 
-/* Hide Scrollbar for Chrome/Safari/Opera */
 #productSlider::-webkit-scrollbar, 
 #relatedSlider::-webkit-scrollbar, 
-#feedbackSlider::-webkit-scrollbar, 
-#brandSlider::-webkit-scrollbar {
-    display: none; 
+#feedbackSlider::-webkit-scrollbar {
+    display: none;
 }
 
-/* পিসিতে মাউস ড্র্যাগ করার সময় স্ন্যাপ বন্ধ করার ক্লাস */
+/* ড্র্যাগ করার সময় স্ন্যাপ বন্ধ করার জন্য (JS এর মাধ্যমে trigger হবে) */
 .dragging {
     scroll-snap-type: none !important;
     scroll-behavior: auto !important;
     cursor: grabbing !important;
 }
 
-/* --- 5. PRODUCT CARDS & ITEMS --- */
-.product-card, .product-card-v2, .feedback-card, .brand-item {
+/* --- 5. PRODUCT CARDS --- */
+.product-card, .product-card-v2 {
     flex-shrink: 0;
     scroll-snap-align: start;
-    scroll-snap-stop: always; /* Safari তে সোয়াইপ মিস করবে না */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none; /* iOS Long Press Menu বন্ধ করা */
-}
-
-.product-card {
+    -webkit-user-drag: none;
     cursor: grab;
 }
 
@@ -100,8 +94,8 @@ body {
     transform: translateY(-5px);
 }
 
-.product-card img, .brand-item img {
-    pointer-events: none; /* ইমেজ ড্র্যাগিং আটকাবে */
+.product-card img {
+    pointer-events: none;
     -webkit-user-drag: none;
 }
 
@@ -113,12 +107,7 @@ body {
     white-space: nowrap;
 }
 
-.product-card .absolute {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    letter-spacing: -0.2px;
-}
-
-/* --- 6. DOTS DESIGN --- */
+/* --- 6. DOTS & BADGES --- */
 .dot {
     width: 8px;
     height: 8px;
@@ -132,6 +121,11 @@ body {
     background: #000;
     width: 25px;
     border-radius: 10px;
+}
+
+.product-card .absolute {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    letter-spacing: -0.2px;
 }
 
 /* --- 7. BUTTONS & FILTERS --- */
@@ -195,6 +189,11 @@ footer li span { line-height: 1.6; }
     }
 
     .hero-section {
-        height: 500px; /* মোবাইলে হিরো সেকশন ব্যালেন্স করা */
+        height: 500px; /* মোবাইলে হিরো সেকশন একটু ছোট করা হলো */
     }
+}
+
+/* iOS-এ ছবির ওপর লং প্রেস করলে মেনু আসা বন্ধ করা */
+.product-card {
+    -webkit-touch-callout: none;
 }
